@@ -1,0 +1,37 @@
+name: Build DeepDive Vita VPK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install vitasdk
+        run: |
+          git clone https://github.com/vitasdk/vdpm
+          cd vdpm
+          sudo ./bootstrap-vitasdk.sh
+          echo "VITASDK=/usr/local/vitasdk" >> $GITHUB_ENV
+          echo "/usr/local/vitasdk/bin" >> $GITHUB_PATH
+
+      - name: Install SDL2 for vitasdk
+        run: |
+          cd vdpm
+          ./vdpm SDL2
+
+      - name: Build VPK
+        run: make
+
+      - name: Upload VPK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: DeepDiveVita
+          path: DeepDiveVita.vpk
+          retention-days: 30
