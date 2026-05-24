@@ -8,25 +8,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: vitasdk/vitasdk:latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install vitasdk
+      - name: Install SDL2 for vitasdk
         run: |
           git clone https://github.com/vitasdk/vdpm
           cd vdpm
-          sudo ./bootstrap-vitasdk.sh
-          echo "VITASDK=/usr/local/vitasdk" >> $GITHUB_ENV
-          echo "/usr/local/vitasdk/bin" >> $GITHUB_PATH
+          ./vdpm SDL2
 
-       name: Install SDL2 for vitasdk
-        run: |
-          cd vdpm
-          sudo ./vdpm SDL2 
-
-          
       - name: Build VPK
         run: make
 
