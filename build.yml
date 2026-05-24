@@ -21,11 +21,12 @@ jobs:
           echo "VITASDK=/usr/local/vitasdk" >> $GITHUB_ENV
           echo "/usr/local/vitasdk/bin" >> $GITHUB_PATH
 
-      - name: Install SDL2 for vitasdk
+       name: Install SDL2 for vitasdk
         run: |
           cd vdpm
-          ./vdpm SDL2
+          sudo ./vdpm SDL2 
 
+          
       - name: Build VPK
         run: make
 
