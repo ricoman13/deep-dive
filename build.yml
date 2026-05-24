@@ -14,12 +14,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install SDL2 for vitasdk
-        run: |
-          git clone https://github.com/vitasdk/vdpm
-          cd vdpm
-          ./vdpm SDL2
-
+     
       - name: Build VPK
         run: make
 
